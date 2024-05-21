@@ -1,0 +1,164 @@
+For Register the user 
+
+ POST : http://localhost:3000/api/users/register
+
+{
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "password": "password"
+}
+
+response : JWT token (valid: 5h)
+
+POST : http://localhost:3000/api/users/login
+
+ {
+  "email": "john.doe@example.com",
+  "password": "password"
+}
+response : JWT token (valid: 5h)
+
+ GET:  http://localhost:3000/api/users/me
+
+ Authorization: Bearer token is required
+ 
+ response: 
+ {
+  "_id": "664c95fe5dd9a7b79a310888",
+  "name": "new Doe",
+  "email": "new.doe@example.com",
+  "__v": 0
+}
+
+
+POST : http://localhost:3000/api/products
+
+{
+  "name": "Product 2",
+  "price": 99.99,
+  "description": "Product description",
+  "imageUrl": "https://example.com/product-image.jpg"
+}
+
+Authorization: Bearer token is required
+ 
+ response: 
+ {
+  "name": "Product 2",
+  "price": 99.99,
+  "description": "Product description",
+  "imageUrl": "https://example.com/product-image.jpg",
+  "_id": "664ca00075997532e33dd67b",
+  "__v": 0
+}
+
+GET : http://localhost:3000/api/products
+
+Authorization: Bearer token is required
+
+ [
+  {
+    "_id": "664ca00075997532e33dd67b",
+    "name": "Product 2",
+    "price": 99.99,
+    "description": "Product description",
+    "imageUrl": "https://example.com/product-image.jpg",
+    "__v": 0
+  }
+ ]
+
+
+GET : http://localhost:3000/api/cart
+
+Authorization: Bearer token is required
+
+response
+{
+  "_id": "664ca20875997532e33dd681",
+  "userId": "664c9ea675997532e33dd676",
+  "products": [
+    {
+      "productId": {
+        "_id": "664c3cf85dd9a7b79a310879",
+        "name": "Product Name",
+        "price": 99.99,
+        "description": "Product description",
+        "imageUrl": "https://example.com/product-image.jpg",
+        "__v": 0
+      },
+      "quantity": 4,
+      "_id": "664ca20875997532e33dd682"
+    }
+  ],
+  "__v": 0
+}
+
+
+POST : http://localhost:3000/api/cart
+
+Authorization: Bearer token is required
+ 
+ {
+  "productId": "664c3cf85dd9a7b79a310879",
+  "quantity": 4
+}
+
+response 
+
+{
+  "userId": "664c95fe5dd9a7b79a310888",
+  "products": [
+    {
+      "productId": "664c3cf85dd9a7b79a310879",
+      "quantity": 4,
+      "_id": "664c96555dd9a7b79a31088e"
+    }
+  ],
+  "_id": "664c96555dd9a7b79a31088d",
+  "__v": 0
+}
+
+ POST : http://localhost:3000/api/orders/payment
+
+ {
+  "paymentIntentId": "stripe_payment_intent_id",
+  "products": [
+    {
+      "productId": "664c3cf85dd9a7b79a310879",
+      "quantity": 2
+    }
+  ],
+  "totalAmount": 199.98,
+  "paymentStatus": "succeeded"
+}
+
+response
+
+{
+  "clientSecret": "pi_3PIsEiSE7oM0iHR01XBVS34e_secret_DAVzjQn5FXUMSboTzjt8rbMl6",
+  "cart": {
+    "_id": "664c96555dd9a7b79a31088d",
+    "userId": "664c95fe5dd9a7b79a310888",
+    "products": [
+      {
+        "productId": {
+          "_id": "664c3cf85dd9a7b79a310879",
+          "name": "Product Name",
+          "price": 99.99,
+          "description": "Product description",
+          "imageUrl": "https://example.com/product-image.jpg",
+          "__v": 0
+        },
+        "quantity": 4,
+        "_id": "664c96555dd9a7b79a31088e"
+      }
+    ],
+    "__v": 0
+  },
+  "totalAmount": 399.96
+}
+
+
+
+
+
